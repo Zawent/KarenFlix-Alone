@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { listarRoles, buscarRolPorId } from "../controller/rolController.js";
+import { auth } from "../middlewares/auth.js";
 
 const router = Router();
 
@@ -16,6 +17,8 @@ const router = Router();
  *   get:
  *     summary: Listar todos los roles
  *     tags: [Roles]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de roles obtenida exitosamente
@@ -39,6 +42,8 @@ router.get("/", listarRoles);
  *   get:
  *     summary: Buscar un rol por ID
  *     tags: [Roles]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -61,6 +66,6 @@ router.get("/", listarRoles);
  *       404:
  *         description: Rol no encontrado
  */
-router.get("/:id", buscarRolPorId);
+router.get("/:id", auth, buscarRolPorId);
 
 export default router;
