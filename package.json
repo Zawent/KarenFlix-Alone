@@ -1,6 +1,7 @@
 {
   "name": "proyecto_karenflix",
   "version": "1.0.0",
+  "type": "module",
   "description": "📌 Tareas divididas por Backend y Frontend\r 🔹 Backend (Node.js + Express + MongoDB)",
   "main": "app.js",
   "scripts": {
@@ -28,6 +29,7 @@
     "mongodb": "^6.18.0",
     "passport-jwt": "^4.0.1",
     "semver": "^7.7.2",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }
 }
