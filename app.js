@@ -7,6 +7,7 @@ import { seedRoles } from "./src/seed/rolSeeder.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./src/config/swagger.js";
 import rateLimit from "express-rate-limit";
+import usuarioRoutes from "./src/routes/usuarioRoutes.js";
 
 // Limiter global máximo 100 requests cada 15 min
 const limiter = rateLimit({
@@ -31,6 +32,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Rutas
 app.use("/roles", rolRoutes);
+app.use("/usuarios", usuarioRoutes);
 
 // Arranque del servidor
 async function startServer() {
