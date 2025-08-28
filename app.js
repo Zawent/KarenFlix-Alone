@@ -8,6 +8,9 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./src/config/swagger.js";
 import rateLimit from "express-rate-limit";
 import usuarioRoutes from "./src/routes/usuarioRoutes.js";
+import categoriaRoutes from "./src/routes/categoriaRoutes.js";
+import { seedCategorias } from "./src/seed/categoriaSeeder.js"; // 👈 nuevo
+
 
 // Limiter global máximo 100 requests cada 15 min
 const limiter = rateLimit({
@@ -33,12 +36,14 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Rutas
 app.use("/roles", rolRoutes);
 app.use("/usuarios", usuarioRoutes);
+app.use("/categorias", categoriaRoutes);
 
 // Arranque del servidor
 async function startServer() {
   try {
     await connectDB();
     await seedRoles(); 
+    await seedCategorias();
 
     app.listen(PORT, () => {
       console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);

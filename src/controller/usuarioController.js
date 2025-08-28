@@ -1,11 +1,9 @@
-// src/controllers/usuarioController.js
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 import { getDB } from "../config/db.js";
 import { Usuario } from "../models/Usuario.js";
 
-/** Helper: quitar campos sensibles antes de responder */
 function sanitize(user) {
   if (!user) return user;
   const { password, ...rest } = user;

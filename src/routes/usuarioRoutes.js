@@ -184,7 +184,7 @@ router.get("/", auth, authorizeRoles(["admin"]), obtenerUsuarios);
  *         required: true
  *         schema:
  *           type: string
- *         description: Nombre del rol (ej: admin, usuario)
+ *         description: "Nombre del rol (ej: admin, usuario)"
  *     responses:
  *       200:
  *         description: Usuarios filtrados por rol
@@ -340,7 +340,7 @@ router.delete(
  *             properties:
  *               nuevoRol:
  *                 type: string
- *                 description: Nombre del rol de destino (ej: admin, usuario)
+ *                 description: "Nombre del rol de destino (ej: admin, usuario)"
  *     responses:
  *       200:
  *         description: Rol cambiado correctamente
