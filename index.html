@@ -144,11 +144,17 @@
           <input type="checkbox" id="remember" /> Recuérdame
         </label>
 
-      </div>
-<div class="actions">
+      </div><div class="actions">
   <button type="submit">Entrar</button>
-  <a href="https://accounts.google.com/" class="link" id="createAccount">Crear cuenta</a>
+  <button type="button" id="createAccount">Crear cuenta</button>
 </div>
+
+<script>
+  document.getElementById('createAccount').addEventListener('click', () => {
+    window.location.href = "https://accounts.google.com/";
+  });
+</script>
+
 
 
       <p class="muted">Bienvenido Registrate</p>
