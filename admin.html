@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin | PelisApp</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Panel Administrador</h1>
+    <nav>
+      <a href="movies.html">Películas</a>
+      <a href="index.html">Salir</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Gestión de películas</h2>
+    <form id="movieForm">
+      <input type="text" id="title" placeholder="Título" required>
+      <input type="text" id="genre" placeholder="Género" required>
+      <textarea id="description" placeholder="Descripción"></textarea>
+      <button type="submit">Guardar</button>
+    </form>
+
+    <div id="adminList"></div>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
