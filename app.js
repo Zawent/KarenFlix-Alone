@@ -10,12 +10,13 @@ import rateLimit from "express-rate-limit";
 import usuarioRoutes from "./src/routes/usuarioRoutes.js";
 import categoriaRoutes from "./src/routes/categoriaRoutes.js";
 import { seedCategorias } from "./src/seed/categoriaSeeder.js"; // 👈 nuevo
+import peliculaRoutes from "./src/routes/peliculaRoutes.js";
+import { seedPeliculas } from "./src/seed/peliculaSeeder.js";
 
-
-// Limiter global máximo 100 requests cada 15 min
+// Limiter global máximo 50 requests cada 15 min
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 50, // Máximo 100 requests por IP
+  max: 50, 
   message: { msg: "Demasiadas peticiones, intenta de nuevo más tarde." },
   standardHeaders: true,
   legacyHeaders: false,
@@ -37,6 +38,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/roles", rolRoutes);
 app.use("/usuarios", usuarioRoutes);
 app.use("/categorias", categoriaRoutes);
+app.use("/peliculas", peliculaRoutes);
 
 // Arranque del servidor
 async function startServer() {
@@ -44,6 +46,7 @@ async function startServer() {
     await connectDB();
     await seedRoles(); 
     await seedCategorias();
+    await seedPeliculas();
 
     app.listen(PORT, () => {
       console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
