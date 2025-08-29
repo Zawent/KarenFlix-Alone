@@ -1,0 +1,78 @@
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-card {
+      background: #111827;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+      width: 300px;
+    }
+    h2 { color: #3b82f6; text-align: center; }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #2563eb; }
+    .error { color: #ef4444; font-size: 0.9rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Usuario" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+      <p id="error" class="error"></p>
+    </form>
+  </div>
+
+  <script>
+    // 🔐 Usuarios simulados (en producción esto vendría del backend)
+    const users = {
+      "admin": { password: "1234", role: "admin" },
+      "maria": { password: "abcd", role: "user" },
+      "juan": { password: "5678", role: "user" }
+    };
+
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("error");
+
+      if (users[username] && users[username].password === password) {
+        if (users[username].role === "admin") {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "movies.html";
+        }
+      } else {
+        errorMsg.textContent = "Usuario o contraseña incorrectos";
+      }
+     });
+  </script>
+</body>
+</html>

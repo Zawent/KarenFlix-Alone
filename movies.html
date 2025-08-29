@@ -3,28 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio | PelisApp</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header>
-    <h1> PelisApp</h1>
-    <nav>
-       <a href="index.html">Inicio</a>
-       <a href="login.html">Login</a>
-    </nav>
-  </header>
-
-  <main class="container"></p>
-  </main>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PelisApp – Inicio</title>
+  <title>PelisApp - Catálogo de Películas</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -33,12 +12,10 @@
       --accent: #3b82f6;
       --accent-hover: #2563eb;
       --text: #e5e7eb;
-      --danger: #ef4444;
       --shadow: 0 10px 25px rgba(0,0,0,.35);
       --radius: 16px;
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin:0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, sans-serif;
       background: var(--bg);
@@ -53,55 +30,71 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: var(--shadow);
     }
     header h1 { margin:0; }
     nav a {
       color: var(--accent);
       margin-left: 1rem;
       text-decoration: none;
+      font-weight: bold;
     }
-    main { flex:1; padding: 1.5rem; }
-    .welcome { text-align:center; margin-bottom:2rem; }
+    nav a:hover { color: var(--accent-hover); }
+    main {
+      flex:1;
+      padding: 2rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--accent);
+    }
     .gallery {
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1rem;
     }
     .gallery img {
-      width:100%;
-      aspect-ratio: 2 / 3;
+      width: 100%;
+      height: 280px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       object-fit: cover;
-      transition: transform .15s ease;
+      transition: transform 0.3s;
     }
-    .gallery img:hover { transform: translateY(-2px) scale(1.02); }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      background: var(--card);
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
   <header>
-
+    <h1> PelisApp</h1>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="movies.html">Películas</a>
+      <a href="login.html">Login</a>
+    </nav>
   </header>
 
   <main>
-    <section class="welcome">
-      <h2>Bienvenido a PelisApp</h2>
-      <p>Explora las mejores películas y series desde una sola plataforma.</p>
-    </section>
+    <h2>Catálogo de Películas</h2>
+    <section class="gallery"><!-- START: 100 imágenes funcionales de películas famosas -->
 
-    <section class="gallery">
-      <!-- The Godfather -->
-       <img src="https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg" 
-     alt="Forrest Gump" 
-     loading="lazy" 
-     onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Forrest+Gump';">
-
-       <img src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="Pulp Fiction" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Pulp+Fiction';">
+      <img src="https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" alt="Inception">
+      <img src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="Pulp Fiction" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Pulp+Fiction';">
        <img src="https://image.tmdb.org/t/p/w500/uzERcfV2rSHNhW5eViQiO9hNiA7.jpg" alt="The Lion King" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Lion+King';">
        <img src="https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg" alt="Spirited Away" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Spirited+Away';">
        <img src="https://image.tmdb.org/t/p/w500/kGzFbGhp99zva6oZODW5atUtnqi.jpg" alt="Goodfellas" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Goodfellas';">
        <img src="https://image.tmdb.org/t/p/w500/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg" alt="The Godfather" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Godfather';">
-<img loading="lazy" src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="The Godfather (1972)" onerror="imgFallback(this, 'The Godfather')">
+      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="The Godfather (1972)" onerror="imgFallback(this, 'The Godfather')">
       <!-- The Shawshank Redemption -->
       <img loading="lazy" src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="The Shawshank Redemption (1994)" onerror="imgFallback(this, 'Shawshank Redemption')">
       <!-- The Dark Knight -->
@@ -131,13 +124,12 @@
       <!-- Parasite (2019) -->
       <img loading="lazy" src="https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite (2019)" onerror="imgFallback(this, 'Parasite')">
     </section>
+
+    </section>
   </main>
 
-  <script>
-    function imgFallback(img, title) {
-      img.onerror = null;
-      img.src = `https://via.placeholder.com/500x750?text=${encodeURIComponent(title)}`;
-    }
-  </script>
+  <footer>
+    © 2025 PelisApp - Desarrollado Por: Jean Marlon Barajas Osorio
+  </footer>
 </body>
 </html>

@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+header {
+  background: #111827;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+header a {
+  color: #3b82f6;
+  margin: 0 10px;
+  text-decoration: none;
+}
+.container { padding: 1rem; }
+.card {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #111827;
+  border-radius: 12px;
+}
+button {
+  background: #3b82f6;
+  border: none;
+  color: white;
+  padding: .6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
