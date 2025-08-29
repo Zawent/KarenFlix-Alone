@@ -12,6 +12,13 @@ import categoriaRoutes from "./src/routes/categoriaRoutes.js";
 import { seedCategorias } from "./src/seed/categoriaSeeder.js"; // 👈 nuevo
 import peliculaRoutes from "./src/routes/peliculaRoutes.js";
 import { seedPeliculas } from "./src/seed/peliculaSeeder.js";
+import resenaRoutes from "./src/routes/resenaRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 // Limiter global máximo 50 requests cada 15 min
 const limiter = rateLimit({
@@ -39,6 +46,12 @@ app.use("/roles", rolRoutes);
 app.use("/usuarios", usuarioRoutes);
 app.use("/categorias", categoriaRoutes);
 app.use("/peliculas", peliculaRoutes);
+app.use("/resenas", resenaRoutes);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
 
 // Arranque del servidor
 async function startServer() {
