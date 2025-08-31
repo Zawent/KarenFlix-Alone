@@ -48,6 +48,9 @@ app.use("/categorias", categoriaRoutes);
 app.use("/peliculas", peliculaRoutes);
 app.use("/resenas", resenaRoutes);
 
+// Middleware para servir archivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });

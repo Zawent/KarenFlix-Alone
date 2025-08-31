@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>KarenFlix | Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #111827;
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.5);
+      width: 350px;
+      overflow: hidden;
+      position: relative;
+    }
+    h2 {
+      color: #3b82f6;
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    input {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #1f2937;
+      color: #f9fafb;
+      font-size: 0.95rem;
+    }
+    input:focus {
+      outline: 2px solid #3b82f6;
+    }
+    button {
+      padding: 12px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .toggle a {
+      color: #3b82f6;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .toggle a:hover {
+      text-decoration: underline;
+    }
+    .error {
+      color: #ef4444;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    /* Animaciones */
+    #registerForm {
+      position: absolute;
+      top: 1rem;
+      width: 80%;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(100%);
+    }
+    #registerForm.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+    #loginForm.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login -->
+    <form id="loginForm">
+      <h2>Iniciar Sesión</h2>
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <input type="password" id="loginPassword" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+      <p id="loginError" class="error"></p>
+      <div class="toggle">
+        ¿No tienes cuenta? <a id="showRegister">Regístrate aquí</a>
+      </div>
+    </form>
+
+    <!-- Registro -->
+    <form id="registerForm">
+      <h2>Registro</h2>
+      <input type="text" id="regNombre" placeholder="Nombre" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="password" id="regPassword" placeholder="Contraseña (mínimo 6 caracteres)" required>
+      <input type="date" id="regFechaNacimiento" placeholder="Fecha de nacimiento">
+      <button type="submit">Crear Cuenta</button>
+      <p id="registerError" class="error"></p>
+      <div class="toggle">
+        ¿Ya tienes cuenta? <a id="showLogin">Inicia sesión</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const apiBase = "http://localhost:4000/usuarios"; // 👈 ajusta si cambia
+
+    // Switch entre login y registro
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    document.getElementById("showRegister").addEventListener("click", () => {
+      loginForm.classList.add("hidden");
+      registerForm.classList.add("active");
+    });
+    document.getElementById("showLogin").addEventListener("click", () => {
+      registerForm.classList.remove("active");
+      loginForm.classList.remove("hidden");
+    });
+
+    // Login
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      const errorMsg = document.getElementById("loginError");
+
+      try {
+        const res = await fetch(`${apiBase}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem("token", data.token); // Guarda el JWT
+          window.location.href = "movies.html"; // Redirigir al dashboard
+        } else {
+          errorMsg.textContent = data.msg || "Credenciales inválidas";
+        }
+      } catch (err) {
+        errorMsg.textContent = "Error de conexión";
+      }
+    });
+
+    // Registro
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById("regNombre").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value.trim();
+      const fechaNacimiento = document.getElementById("regFechaNacimiento").value;
+      const errorMsg = document.getElementById("registerError");
+
+      try {
+        const res = await fetch(`${apiBase}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre, email, password, fechaNacimiento })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert("Usuario creado con éxito. Ahora inicia sesión.");
+          registerForm.reset();
+          document.getElementById("showLogin").click();
+        } else {
+          errorMsg.textContent = data.msg || "Error en el registro";
+        }
+      } catch (err) {
+        errorMsg.textContent = "Error de conexión";
+      }
+    });
+  </script>
+</body>
+</html>
