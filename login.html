@@ -22,6 +22,11 @@
       width: 350px;
       overflow: hidden;
       position: relative;
+      transition: min-height 0.4s ease; /* 👈 transición de altura */
+      min-height: 360px; /* altura base login */
+    }
+    .container.expanded {
+      min-height: 420px; /* altura ampliada para registro */
     }
     h2 {
       color: #3b82f6;
@@ -98,7 +103,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="formContainer">
     <!-- Login -->
     <form id="loginForm">
       <h2>Iniciar Sesión</h2>
@@ -132,13 +137,18 @@
     // Switch entre login y registro
     const loginForm = document.getElementById("loginForm");
     const registerForm = document.getElementById("registerForm");
+    const container = document.getElementById("formContainer");
+
     document.getElementById("showRegister").addEventListener("click", () => {
       loginForm.classList.add("hidden");
       registerForm.classList.add("active");
+      container.classList.add("expanded"); // 👈 expande el contenedor
     });
+
     document.getElementById("showLogin").addEventListener("click", () => {
       registerForm.classList.remove("active");
       loginForm.classList.remove("hidden");
+      container.classList.remove("expanded"); // 👈 vuelve al tamaño base
     });
 
     // Login
@@ -157,7 +167,7 @@
         const data = await res.json();
         if (res.ok) {
           localStorage.setItem("token", data.token); // Guarda el JWT
-          window.location.href = "movies.html"; // Redirigir al dashboard
+          window.location.href = "./movies.html";
         } else {
           errorMsg.textContent = data.msg || "Credenciales inválidas";
         }

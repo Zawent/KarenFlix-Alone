@@ -15,6 +15,8 @@ import { seedPeliculas } from "./src/seed/peliculaSeeder.js";
 import resenaRoutes from "./src/routes/resenaRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import { verificarToken } from "./src/middlewares/auth.js"; // tu middleware JWT
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,13 +50,16 @@ app.use("/categorias", categoriaRoutes);
 app.use("/peliculas", peliculaRoutes);
 app.use("/resenas", resenaRoutes);
 
-// Middleware para servir archivos estáticos
-app.use(express.static(path.join(__dirname, "public")));
-
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.resolve(__dirname, "index.html"));
 });
 
+app.get("/login", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "login.html"));
+});
+
+// Middleware para servir estáticos (sin token)
+app.use(express.static(path.join(__dirname, "public")));
 
 // Arranque del servidor
 async function startServer() {

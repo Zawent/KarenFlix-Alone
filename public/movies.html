@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PelisApp - Catálogo de Películas</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PelisApp - Catálogo</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -12,10 +13,10 @@
       --accent: #3b82f6;
       --accent-hover: #2563eb;
       --text: #e5e7eb;
-      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --shadow: 0 10px 25px rgba(0, 0, 0, .35);
       --radius: 16px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: system-ui, sans-serif;
       background: var(--bg);
@@ -24,6 +25,7 @@
       flex-direction: column;
       min-height: 100vh;
     }
+
     header {
       background: var(--card);
       padding: 1rem;
@@ -32,39 +34,104 @@
       align-items: center;
       box-shadow: var(--shadow);
     }
-    header h1 { margin:0; }
-    nav a {
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav a,
+    nav button {
       color: var(--accent);
       margin-left: 1rem;
       text-decoration: none;
       font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
     }
-    nav a:hover { color: var(--accent-hover); }
+
+    nav a:hover,
+    nav button:hover {
+      color: var(--accent-hover);
+    }
+
     main {
-      flex:1;
+      flex: 1;
       padding: 2rem;
     }
+
     h2 {
       text-align: center;
       margin-bottom: 2rem;
       color: var(--accent);
     }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1rem;
     }
-    .gallery img {
-      width: 100%;
-      height: 280px;
+
+    .card {
+      background: var(--card);
       border-radius: var(--radius);
+      overflow: hidden;
       box-shadow: var(--shadow);
-      object-fit: cover;
       transition: transform 0.3s;
     }
-    .gallery img:hover {
+
+    .card:hover {
       transform: scale(1.05);
     }
+
+    .card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .card .info {
+      padding: 0.8rem;
+    }
+
+    .card .info h3 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+      color: var(--accent);
+    }
+
+    .card .info p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .add-section {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .add-section p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .add-section button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: background 0.3s;
+    }
+
+    .add-section button:hover {
+      background: var(--accent-hover);
+    }
+
     footer {
       background: var(--card);
       padding: 1rem;
@@ -74,62 +141,99 @@
     }
   </style>
 </head>
+
 <body>
   <header>
-    <h1> PelisApp</h1>
+    <h1>PelisApp</h1>
     <nav>
       <a href="index.html">Inicio</a>
       <a href="movies.html">Películas</a>
-      <a href="login.html">Login</a>
+      <button id="logoutBtn">Logout</button>
     </nav>
   </header>
 
   <main>
     <h2>Catálogo de Películas</h2>
-    <section class="gallery"><!-- START: 100 imágenes funcionales de películas famosas -->
+    <section class="gallery" id="gallery"></section>
 
-      <img src="https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" alt="Inception">
-      <img src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="Pulp Fiction" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Pulp+Fiction';">
-       <img src="https://image.tmdb.org/t/p/w500/uzERcfV2rSHNhW5eViQiO9hNiA7.jpg" alt="The Lion King" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Lion+King';">
-       <img src="https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg" alt="Spirited Away" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Spirited+Away';">
-       <img src="https://image.tmdb.org/t/p/w500/kGzFbGhp99zva6oZODW5atUtnqi.jpg" alt="Goodfellas" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Goodfellas';">
-       <img src="https://image.tmdb.org/t/p/w500/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg" alt="The Godfather" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x450?text=Godfather';">
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg" alt="The Godfather (1972)" onerror="imgFallback(this, 'The Godfather')">
-      <!-- The Shawshank Redemption -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="The Shawshank Redemption (1994)" onerror="imgFallback(this, 'Shawshank Redemption')">
-      <!-- The Dark Knight -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="The Dark Knight (2008)" onerror="imgFallback(this, 'The Dark Knight')">
-      <!-- Pulp Fiction -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg" alt="Pulp Fiction (1994)" onerror="imgFallback(this, 'Pulp Fiction')">
-      <!-- Forrest Gump -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg" alt="Forrest Gump (1994)" onerror="imgFallback(this, 'Forrest Gump')">
-      <!-- Inception -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg" alt="Inception (2010)" onerror="imgFallback(this, 'Inception')">
-      <!-- Interstellar -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar (2014)" onerror="imgFallback(this, 'Interstellar')">
-      <!-- The Matrix -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg" alt="The Matrix (1999)" onerror="imgFallback(this, 'The Matrix')">
-      <!-- Fight Club -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg" alt="Fight Club (1999)" onerror="imgFallback(this, 'Fight Club')">
-      <!-- The Lord of the Rings: The Fellowship of the Ring -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg" alt="The Lord of the Rings: The Fellowship of the Ring (2001)" onerror="imgFallback(this, 'LOTR Fellowship')">
-      <!-- Star Wars: A New Hope -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg" alt="Star Wars: A New Hope (1977)" onerror="imgFallback(this, 'Star Wars')">
-      <!-- The Avengers (2012) -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg" alt="Marvel's The Avengers (2012)" onerror="imgFallback(this, 'The Avengers')">
-      <!-- Titanic (1997) -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg" alt="Titanic (1997)" onerror="imgFallback(this, 'Titanic')">
-      <!-- Spirited Away (2001) -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg" alt="Spirited Away (2001)" onerror="imgFallback(this, 'Spirited Away')">
-      <!-- Parasite (2019) -->
-      <img loading="lazy" src="https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite (2019)" onerror="imgFallback(this, 'Parasite')">
-    </section>
-
+    <!-- 👇 Sección para agregar nueva película -->
+    <section class="add-section">
+      <p>¿No ves tu película favorita? ¡Agregala ahora!</p>
+      <button id="addMovieBtn">Agregar Película</button>
     </section>
   </main>
 
   <footer>
-    © 2025 PelisApp - Desarrollado Por: Jean Marlon Barajas Osorio
+    © 2025 PelisApp - Desarrollado por Uriel :D
   </footer>
+
+  <script>
+    const apiBase = "http://localhost:4000/peliculas";
+    const token = localStorage.getItem("token");
+
+    // 👇 Logout
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      window.location.href = "/";
+    });
+
+    // 👇 Siempre validar al entrar a la página (incluso desde "atrás")
+    window.addEventListener("pageshow", () => {
+      const tokenCheck = localStorage.getItem("token");
+      if (!tokenCheck) {
+        alert("Sesión expirada o cerrada. Redirigiendo al login...");
+        window.location.replace("login"); // usar replace para que no se quede en el historial
+      } else {
+        loadMovies(tokenCheck);
+      }
+    });
+
+    async function loadMovies(token) {
+      const gallery = document.getElementById("gallery");
+
+      try {
+        const res = await fetch(apiBase, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          gallery.innerHTML = `<p>Error al cargar las películas: ${errorData.msg || "auth o servidor"}</p>`;
+          return;
+        }
+
+        const peliculas = await res.json();
+
+        gallery.innerHTML = peliculas
+          .map(
+            (p) => `
+        <div class="card">
+          <img src="${p.imagen}" alt="${p.titulo}" 
+               onerror="this.src='https://via.placeholder.com/300x450?text=${p.titulo}'">
+          <div class="info">
+            <h3>${p.titulo} (${p.anio})</h3>
+            <p>${p.descripcion}</p>
+          </div>
+        </div>
+      `
+          )
+          .join("");
+      } catch (err) {
+        console.error("Error de conexión:", err);
+        gallery.innerHTML = `<p>Error de conexión al servidor.</p>`;
+      }
+    }
+
+    // 👇 Acción del botón "Agregar Película"
+    document.getElementById("addMovieBtn").addEventListener("click", () => {
+      alert("Aquí iría el formulario para agregar una nueva película 🎬");
+    });
+  </script>
+
+
 </body>
+
 </html>
