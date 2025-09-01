@@ -20,6 +20,7 @@ export async function seedPeliculas() {
         imagen: "https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Pulp Fiction",
@@ -29,6 +30,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Lion King",
@@ -38,6 +40,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/uzERcfV2rSHNhW5eViQiO9hNiA7.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Spirited Away",
@@ -47,6 +50,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Goodfellas",
@@ -56,6 +60,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/kGzFbGhp99zva6oZODW5atUtnqi.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Godfather",
@@ -65,6 +70,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/rSPw7tgCH9c6NqICZef4kZjFOQ5.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Godfather Part II",
@@ -74,6 +80,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Shawshank Redemption",
@@ -83,6 +90,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Dark Knight",
@@ -92,6 +100,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Forrest Gump",
@@ -101,6 +110,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/saHP97rTPS5eLmrLQEcANmKrsFl.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Interstellar",
@@ -110,6 +120,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Matrix",
@@ -119,6 +130,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Fight Club",
@@ -128,6 +140,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Lord of the Rings: The Fellowship of the Ring",
@@ -137,6 +150,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Star Wars: A New Hope",
@@ -146,6 +160,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "The Avengers",
@@ -155,6 +170,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Titanic",
@@ -164,6 +180,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Spirited Away (2001)",
@@ -173,6 +190,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
       {
         titulo: "Parasite",
@@ -182,6 +200,7 @@ export async function seedPeliculas() {
         imagen: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
         tipo: "pelicula",
         aprobada: true,
+        userId: null,
       },
     ];
 
@@ -202,7 +221,8 @@ export async function seedPeliculas() {
         p.anio,
         p.imagen,
         p.tipo,
-        p.aprobada
+        p.aprobada,
+        p.userId,
       );
 
       ops.push({

@@ -9,6 +9,7 @@ import {
   editarPelicula,
   eliminarPelicula,
   cambiarEstadoAprobacion,
+  listarPendientesUsuario,
 } from "../controller/peliculaController.js";
 import { auth, authorizeRoles } from "../middlewares/auth.js";
 
@@ -221,5 +222,45 @@ router.patch(
   authorizeRoles(["Administrador"]),
   cambiarEstadoAprobacion
 );
+
+/**
+ * @swagger
+ * /peliculas/pendientes:
+ *   get:
+ *     summary: Listar películas no aprobadas del usuario autenticado
+ *     tags: [Peliculas]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de películas no aprobadas del usuario
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: ID de la película
+ *                   titulo:
+ *                     type: string
+ *                     description: Título de la película
+ *                   descripcion:
+ *                     type: string
+ *                     description: Descripción de la película
+ *                   aprobada:
+ *                     type: boolean
+ *                     example: false
+ *                   userId:
+ *                     type: string
+ *                     description: ID del usuario dueño de la película
+ *       401:
+ *         description: Token no válido o no proporcionado
+ *       500:
+ *         description: Error al obtener las películas
+ */
+router.get("/pendientes", auth, listarPendientesUsuario);
 
 export default router;

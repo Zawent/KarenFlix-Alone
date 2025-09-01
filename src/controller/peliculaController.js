@@ -7,8 +7,27 @@ export const crearPelicula = async (req, res) => {
   try {
     const { titulo, descripcion, categoriaId, anio, imagen, tipo } = req.body;
 
+    // Validar que el ID sea un ObjectId válido
+    if (!ObjectId.isValid(categoriaId)) {
+      return res.status(400).json({ msg: "El ID de la categoría no es válido" });
+    }
+
+    const db = getDB();
+
+    // Verificar que la categoría exista
+    const categoria = await db
+      .collection("categorias")
+      .findOne({ _id: new ObjectId(categoriaId) });
+
+    if (!categoria) {
+      return res.status(400).json({ msg: "La categoría especificada no existe" });
+    }
+
     // Definir aprobación según el rol
     const aprobada = req.usuario.rol === "Administrador";
+
+    // Extraer el userId desde el token (lo guardaste en req.usuario en el middleware)
+    const userId = req.usuario.id;
 
     const pelicula = new Pelicula(
       titulo,
@@ -17,15 +36,20 @@ export const crearPelicula = async (req, res) => {
       anio,
       imagen,
       tipo,
-      aprobada
+      aprobada,
+      new ObjectId(userId) // guardamos el userId
     );
 
-    const db = getDB();
     const result = await db.collection("peliculas").insertOne(pelicula);
 
-    res.status(201).json({ msg: "Película/Serie creada", id: result.insertedId });
+    res
+      .status(201)
+      .json({ msg: "Película/Serie creada", id: result.insertedId });
   } catch (error) {
-    res.status(500).json({ msg: "Error al crear la película/serie", error });
+    console.error("Error al crear la película:", error);
+    res
+      .status(500)
+      .json({ msg: "Error al crear la película/serie", error: error.message });
   }
 };
 
@@ -149,5 +173,28 @@ export const cambiarEstadoAprobacion = async (req, res) => {
     res.json({ msg: `Estado de aprobación actualizado a ${aprobada}` });
   } catch (error) {
     res.status(500).json({ msg: "Error al cambiar estado de aprobación", error });
+  }
+};
+
+
+export const listarPendientesUsuario = async (req, res) => {
+  try {
+    const db = getDB();
+
+    // 🔹 userId fijo de prueba
+    const userId = "68b0d8f58f16b445f8f276bd";
+
+    const peliculas = await db.collection("peliculas").find({
+      aprobada: false,
+      userId: new ObjectId(userId)
+    }).toArray();
+
+    res.status(200).json(peliculas);
+  } catch (error) {
+    console.error("Error al listar películas pendientes:", error);
+    res.status(500).json({
+      msg: "Error al obtener películas pendientes",
+      error: error.message
+    });
   }
 };

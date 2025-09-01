@@ -167,6 +167,14 @@
     © 2025 PelisApp - Desarrollado por Uriel :D
   </footer>
 
+
+  <script>
+    document.getElementById("addMovieBtn").addEventListener("click", () => {
+      window.location.href = "./peliAdd.html";
+    });
+  </script>
+
+
   <script>
     const apiBase = "http://localhost:4000/peliculas";
     const token = localStorage.getItem("token");
@@ -227,10 +235,6 @@
       }
     }
 
-    // 👇 Acción del botón "Agregar Película"
-    document.getElementById("addMovieBtn").addEventListener("click", () => {
-      alert("Aquí iría el formulario para agregar una nueva película 🎬");
-    });
   </script>
 
 

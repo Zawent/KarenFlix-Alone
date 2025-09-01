@@ -1,5 +1,5 @@
 export class Pelicula {
-  constructor(titulo, descripcion, categoriaId, anio, imagen, tipo, aprobada = false) {
+  constructor(titulo, descripcion, categoriaId, anio, imagen, tipo, aprobada = false, userId) {
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.categoriaId = categoriaId;
@@ -7,5 +7,6 @@ export class Pelicula {
     this.imagen = imagen;
     this.tipo = tipo; // "pelicula" o "serie"
     this.aprobada = aprobada;
+    this.userId = userId;
   }
 }

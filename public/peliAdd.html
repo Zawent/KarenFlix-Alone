@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PelisApp - Panel</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #111827;
+            --muted: #64748b;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --text: #e5e7eb;
+            --shadow: 0 10px 25px rgba(0, 0, 0, .35);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--card);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav a,
+        nav button {
+            color: var(--accent);
+            margin-left: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        nav a:hover,
+        nav button:hover {
+            color: var(--accent-hover);
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .tabs button {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            background: var(--card);
+            color: var(--text);
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .tabs button.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .card .info {
+            padding: 0.8rem;
+        }
+
+        .card .info h3 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--accent);
+        }
+
+        .card .info p {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .add-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .add-section button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: var(--radius);
+            background: var(--accent);
+            color: white;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: background 0.3s;
+        }
+
+        .add-section button:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .modal-content label {
+            display: block;
+            margin-top: 1rem;
+        }
+
+        .modal-content input,
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        .modal-actions button {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-cancel {
+            background: #64748b;
+            color: white;
+        }
+
+        .btn-submit {
+            background: var(--accent);
+            color: white;
+        }
+
+        footer {
+            background: var(--card);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>PelisApp</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="movies.html">Películas</a>
+            <button id="logoutBtn">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Panel de Usuario</h2>
+
+        <!-- Botón crear -->
+        <section class="add-section">
+            <button id="addMovieBtn">➕ Crear Película</button>
+        </section>
+
+        <!-- Pestañas -->
+        <div class="tabs">
+            <button id="tabCreated" class="active">Películas Creadas</button>
+            <button id="tabApproved">Películas Aprobadas</button>
+        </div>
+
+        <!-- Secciones -->
+        <section id="createdSection" class="gallery"></section>
+        <section id="approvedSection" class="gallery" style="display:none"></section>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <h3>Nueva Película</h3>
+            <form id="movieForm">
+                <label>Título:
+                    <input type="text" name="titulo" required>
+                </label>
+                <label>Descripción:
+                    <textarea name="descripcion" required></textarea>
+                </label>
+                <label>Año:
+                    <input type="number" name="anio" required>
+                </label>
+                <label>Imagen (URL):
+                    <input type="text" name="imagen">
+                </label>
+                <label>Tipo:
+                    <select name="tipo" required>
+                        <option value="Pelicula">Película</option>
+                        <option value="Serie">Serie</option>
+                    </select>
+                </label>
+                <label>Categoría (ID):
+                    <input type="text" name="categoriaId" required>
+                </label>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelModal">Cancelar</button>
+                    <button type="submit" class="btn-submit">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 PelisApp - Desarrollado por Uriel :D
+    </footer>
+
+    <script>
+        const apiBase = "http://localhost:4000/peliculas";
+        const token = localStorage.getItem("token");
+
+        // Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("token");
+            window.location.href = "/";
+        });
+
+        // Modal abrir/cerrar
+        const modal = document.getElementById("movieModal");
+        const addBtn = document.getElementById("addMovieBtn");
+        const cancelBtn = document.getElementById("cancelModal");
+
+        addBtn.addEventListener("click", () => modal.style.display = "flex");
+        cancelBtn.addEventListener("click", () => modal.style.display = "none");
+        window.addEventListener("click", e => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+
+        // Tabs toggle
+        const createdBtn = document.getElementById("tabCreated");
+        const approvedBtn = document.getElementById("tabApproved");
+        const createdSection = document.getElementById("createdSection");
+        const approvedSection = document.getElementById("approvedSection");
+
+        createdBtn.addEventListener("click", () => {
+            createdBtn.classList.add("active");
+            approvedBtn.classList.remove("active");
+            createdSection.style.display = "grid";
+            approvedSection.style.display = "none";
+        });
+
+        approvedBtn.addEventListener("click", () => {
+            approvedBtn.classList.add("active");
+            createdBtn.classList.remove("active");
+            createdSection.style.display = "none";
+            approvedSection.style.display = "grid";
+        });
+
+        // Validación de token
+        window.addEventListener("pageshow", () => {
+            const tokenCheck = localStorage.getItem("token");
+            if (!tokenCheck) {
+                alert("Sesión expirada. Redirigiendo...");
+                window.location.replace("login");
+            } else {
+                loadMovies(tokenCheck);
+            }
+        });
+
+        async function loadMovies(token) {
+            try {
+                // Pendientes del usuario
+                const resPendientes = await fetch(`${apiBase}/pendientes`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (!resPendientes.ok) {
+                    console.error("Error cargando películas pendientes");
+                    return;
+                }
+
+                const pendientes = await resPendientes.json();
+                renderMovies(createdSection, pendientes);
+
+                // Aprobadas (todas aprobadas)
+                const resAprobadas = await fetch(apiBase, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (!resAprobadas.ok) {
+                    console.error("Error cargando películas aprobadas");
+                    return;
+                }
+
+                const todas = await resAprobadas.json();
+                const aprobadas = todas.filter(p => p.aprobada);
+
+                renderMovies(approvedSection, aprobadas);
+
+            } catch (err) {
+                console.error("Error conexión:", err);
+            }
+        }
+
+        function renderMovies(container, lista) {
+            container.innerHTML = lista.map(p => `
+      <div class="card">
+        <img src="${p.imagen}" alt="${p.titulo}"
+             onerror="this.src='https://via.placeholder.com/300x450?text=${p.titulo}'">
+        <div class="info">
+          <h3>${p.titulo} (${p.anio})</h3>
+          <p>${p.descripcion}</p>
+        </div>
+      </div>
+    `).join("");
+        }
+
+        // Formulario crear película
+        const movieForm = document.getElementById("movieForm");
+        movieForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = Object.fromEntries(new FormData(movieForm).entries());
+
+            try {
+                const res = await fetch(apiBase, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert("Película creada correctamente");
+                    modal.style.display = "none";
+                    movieForm.reset();
+                    loadMovies(token);
+                } else {
+                    alert("Error: " + (data.msg || "No se pudo crear"));
+                }
+            } catch (err) {
+                console.error("Error creando película:", err);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
