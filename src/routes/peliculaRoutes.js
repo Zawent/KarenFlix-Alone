@@ -1,15 +1,14 @@
-// routes/peliculaRoutes.js
 import express from "express";
 import {
   crearPelicula,
   listarPeliculas,
-  listarPorId,
+  listarPendientesUsuario,
   listarPorCategoria,
   listarPorTipo,
+  listarPorId,
   editarPelicula,
   eliminarPelicula,
   cambiarEstadoAprobacion,
-  listarPendientesUsuario,
 } from "../controller/peliculaController.js";
 import { auth, authorizeRoles } from "../middlewares/auth.js";
 
@@ -22,245 +21,36 @@ const router = express.Router();
  *   description: Endpoints para gestionar películas
  */
 
-/**
- * @swagger
- * /peliculas:
- *   post:
- *     summary: Crear una nueva película
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               titulo:
- *                 type: string
- *               descripcion:
- *                 type: string
- *               categoriaId:
- *                 type: string
- *               tipo:
- *                 type: string
- *               aprobado:
- *                 type: boolean
- *     responses:
- *       201:
- *         description: Película creada exitosamente
- */
+// Crear
 router.post("/", auth, crearPelicula);
 
-/**
- * @swagger
- * /peliculas:
- *   get:
- *     summary: Listar todas las películas
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de películas obtenida exitosamente
- */
+// Listar todas
 router.get("/", auth, listarPeliculas);
 
-/**
- * @swagger
- * /peliculas/{id}:
- *   get:
- *     summary: Buscar película por ID
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID de la película
- *     responses:
- *       200:
- *         description: Película encontrada
- *       404:
- *         description: Película no encontrada
- */
-router.get("/:id", auth, listarPorId);
+// Listar pendientes del usuario autenticado
+router.get("/pendientes", auth, listarPendientesUsuario);
 
-/**
- * @swagger
- * /peliculas/categoria/{categoriaId}:
- *   get:
- *     summary: Listar películas por categoría
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: categoriaId
- *         schema:
- *           type: string
- *         required: true
- *         description: ID de la categoría
- *     responses:
- *       200:
- *         description: Lista de películas de la categoría
- */
+// Listar por categoría
 router.get("/categoria/:categoriaId", auth, listarPorCategoria);
 
-/**
- * @swagger
- * /peliculas/tipo/{tipo}:
- *   get:
- *     summary: Listar películas por tipo
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: tipo
- *         schema:
- *           type: string
- *         required: true
- *         description: "Tipo de película (ej: serie, documental, etc.)"
- *     responses:
- *       200:
- *         description: Lista de películas por tipo
- */
+// Listar por tipo
 router.get("/tipo/:tipo", auth, listarPorTipo);
 
-/**
- * @swagger
- * /peliculas/{id}:
- *   put:
- *     summary: Editar película (solo Administrador)
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID de la película
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               titulo:
- *                 type: string
- *               descripcion:
- *                 type: string
- *               categoriaId:
- *                 type: string
- *               tipo:
- *                 type: string
- *               aprobado:
- *                 type: boolean
- *     responses:
- *       200:
- *         description: Película editada exitosamente
- *       403:
- *         description: No autorizado
- */
+// Listar por ID (debe ir después de las rutas estáticas para evitar conflictos)
+router.get("/:id", auth, listarPorId);
+
+// Editar (solo administrador)
 router.put("/:id", auth, authorizeRoles(["Administrador"]), editarPelicula);
 
-/**
- * @swagger
- * /peliculas/{id}:
- *   delete:
- *     summary: Eliminar película (solo Administrador)
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID de la película
- *     responses:
- *       200:
- *         description: Película eliminada exitosamente
- *       403:
- *         description: No autorizado
- */
+// Eliminar (solo administrador)
 router.delete("/:id", auth, authorizeRoles(["Administrador"]), eliminarPelicula);
 
-/**
- * @swagger
- * /peliculas/aprobar/{id}:
- *   patch:
- *     summary: Cambiar estado de aprobación de una película (solo Administrador)
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: ID de la película
- *     responses:
- *       200:
- *         description: Estado de aprobación actualizado
- *       403:
- *         description: No autorizado
- */
+// Cambiar estado de aprobación (solo administrador)
 router.patch(
   "/aprobar/:id",
   auth,
   authorizeRoles(["Administrador"]),
   cambiarEstadoAprobacion
 );
-
-/**
- * @swagger
- * /peliculas/pendientes:
- *   get:
- *     summary: Listar películas no aprobadas del usuario autenticado
- *     tags: [Peliculas]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de películas no aprobadas del usuario
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: string
- *                     description: ID de la película
- *                   titulo:
- *                     type: string
- *                     description: Título de la película
- *                   descripcion:
- *                     type: string
- *                     description: Descripción de la película
- *                   aprobada:
- *                     type: boolean
- *                     example: false
- *                   userId:
- *                     type: string
- *                     description: ID del usuario dueño de la película
- *       401:
- *         description: Token no válido o no proporcionado
- *       500:
- *         description: Error al obtener las películas
- */
-router.get("/pendientes", auth, listarPendientesUsuario);
 
 export default router;

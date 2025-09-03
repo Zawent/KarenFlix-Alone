@@ -93,7 +93,10 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
+            /* 👈 más perfiladas */
+            justify-content: center;
+            /* 👈 centra las tarjetas */
             gap: 1rem;
         }
 
@@ -103,6 +106,10 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s;
+            max-width: 220px;
+            /* 👈 límite para que no crezcan tanto */
+            margin: 0 auto;
+            /* 👈 centrar si sobra espacio */
         }
 
         .card:hover {
@@ -230,7 +237,7 @@
     <header>
         <h1>PelisApp</h1>
         <nav>
-            <a href="index.html">Inicio</a>
+            <a href="../index.html">Inicio</a>
             <a href="movies.html">Películas</a>
             <button id="logoutBtn">Logout</button>
         </nav>
@@ -334,7 +341,7 @@
             approvedSection.style.display = "grid";
         });
 
-        // Validación de token
+        // Validación de token y carga inicial
         window.addEventListener("pageshow", () => {
             const tokenCheck = localStorage.getItem("token");
             if (!tokenCheck) {
@@ -360,7 +367,7 @@
                 const pendientes = await resPendientes.json();
                 renderMovies(createdSection, pendientes);
 
-                // Aprobadas (todas aprobadas)
+                // Aprobadas (todas con aprobada: true)
                 const resAprobadas = await fetch(apiBase, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -370,9 +377,7 @@
                     return;
                 }
 
-                const todas = await resAprobadas.json();
-                const aprobadas = todas.filter(p => p.aprobada);
-
+                const aprobadas = await resAprobadas.json();
                 renderMovies(approvedSection, aprobadas);
 
             } catch (err) {

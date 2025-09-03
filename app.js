@@ -25,7 +25,7 @@ const __dirname = path.dirname(__filename);
 // Limiter global máximo 50 requests cada 15 min
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 50, 
+  max: 500, 
   message: { msg: "Demasiadas peticiones, intenta de nuevo más tarde." },
   standardHeaders: true,
   legacyHeaders: false,
