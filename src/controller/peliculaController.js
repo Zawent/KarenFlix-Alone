@@ -1,6 +1,9 @@
 import { ObjectId } from "mongodb";
 import { getDB } from "../config/db.js";
 import { Pelicula } from "../models/Pelicula.js";
+import path from "path";
+import fs from "fs";
+
 
 // Crear película/serie
 export const crearPelicula = async (req, res) => {
@@ -188,5 +191,47 @@ export const cambiarEstadoAprobacion = async (req, res) => {
     res.json({ msg: `Estado de aprobación actualizado a ${aprobada}` });
   } catch (error) {
     res.status(500).json({ msg: "Error al cambiar estado de aprobación", error });
+  }
+};
+
+
+// Exportar todas las películas a un archivo CSV
+export const exportarPeliculasCSV = async (req, res) => {
+  try {
+    const db = getDB();
+    const peliculas = await db.collection("peliculas").find().toArray();
+
+    if (peliculas.length === 0) {
+      return res.status(400).json({ msg: "No hay películas para exportar" });
+    }
+
+    // Ruta donde se guardará el archivo CSV
+    const exportPath = path.join(__dirname, "../exports/peliculas.csv");
+
+    // Encabezado del archivo CSV
+    const header = "Título,Descripción,Categoría ID,Año,Imagen,Tipo,Aprobada,User ID\n";
+
+    // Crear contenido del archivo CSV
+    const content = peliculas.map(pelicula => {
+      return `"${pelicula.titulo}","${pelicula.descripcion}","${pelicula.categoriaId}","${pelicula.anio}","${pelicula.imagen}","${pelicula.tipo}","${pelicula.aprobada}","${pelicula.userId}"`;
+    }).join("\n");
+
+    // Verificar si la carpeta 'exports' existe, si no, crearla
+    const exportFolderPath = path.join(__dirname, "../exports");
+    if (!fs.existsSync(exportFolderPath)) {
+      fs.mkdirSync(exportFolderPath);
+    }
+
+    // Escribir el archivo CSV
+    const csvData = header + content;
+    fs.writeFileSync(exportPath, csvData);
+
+    res.status(200).json({
+      msg: "Películas exportadas exitosamente",
+      file: exportPath,
+    });
+  } catch (error) {
+    console.error("Error al exportar las películas a CSV:", error);
+    res.status(500).json({ msg: "Error al exportar películas a CSV", error: error.message });
   }
 };
